@@ -1,4 +1,4 @@
-﻿using Lab4.Models;
+﻿using WpfApp.Models;
 
 namespace UnitTests
 {

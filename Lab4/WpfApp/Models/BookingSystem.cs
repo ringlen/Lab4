@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab4.Models
+namespace WpfApp.Models
 {
     public class BookingSystem
     {
@@ -13,6 +13,11 @@ namespace Lab4.Models
         public void AddTicket(Ticket ticket)
         {
             tickets.Add(ticket);
+        }
+
+        public void RemoveTicket(Ticket ticket)
+        {
+            tickets.Remove(ticket);
         }
 
         public int GetTotalBookedToday(DateTime date)

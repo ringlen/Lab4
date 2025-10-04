@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab4.Models
+namespace WpfApp.Models
 {
     public class ConcertTicket : Ticket
     {
@@ -22,5 +22,10 @@ namespace Lab4.Models
 
         public override string GetInfo() =>
             base.GetInfo() + $", Сектор: {Sector}, {GetPerformerInfo()}";
+
+        public override string ToString()
+        {
+            return $"{EventName} ({Performer}) - {Date:d}";
+        }
     }
 }

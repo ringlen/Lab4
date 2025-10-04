@@ -6,44 +6,68 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:WpfApp"
         mc:Ignorable="d"
-            Title="Ticket Booking System" Height="450" Width="800" Background="Ivory">
-    <Grid Margin="10">
-        <StackPanel>
+            Title="Ticket Booking System" Height="500" Width="600" Background="Ivory">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-            <TextBlock Text="Назва події:" Width="333" HorizontalAlignment="Left"/>
-            <TextBox x:Name="EventNameTextBox" Width="370" HorizontalAlignment="Left"/>
+        <StackPanel>
+            <TextBlock Text="Назва події:"/>
+            <TextBox x:Name="EventNameTextBox" Width="350" HorizontalAlignment="Left"/>
 
             <TextBlock Text="Дата:"/>
-            <DatePicker x:Name="EventDatePicker" HorizontalAlignment="Left" Width="128"/>
+            <DatePicker x:Name="EventDatePicker" Width="150" HorizontalAlignment="Left"/>
 
             <TextBlock Text="Місце проведення:"/>
-            <TextBox x:Name="VenueTextBox" HorizontalAlignment="Left" Width="370"/>
+            <TextBox x:Name="VenueTextBox" Width="350" HorizontalAlignment="Left"/>
 
-            <ComboBox x:Name="TicketTypeComboBox" SelectedIndex="0" Width="200"
-                  SelectionChanged="TicketTypeComboBox_SelectionChanged" HorizontalAlignment="Left">
+            <TextBlock Text="Тип квитка:"/>
+            <ComboBox x:Name="TicketTypeComboBox" Width="150" SelectedIndex="0"
+                      SelectionChanged="TicketTypeComboBox_SelectionChanged" HorizontalAlignment="Left">
                 <ComboBoxItem Content="Концерт"/>
                 <ComboBoxItem Content="Кіно"/>
             </ComboBox>
 
-            <StackPanel x:Name="ConcertPanel">
+            <StackPanel x:Name="ConcertPanel" Margin="0,10,0,0">
                 <TextBlock Text="Сектор:"/>
-                <TextBox x:Name="SectorTextBox" HorizontalAlignment="Left" Width="87"/>
+                <TextBox x:Name="SectorTextBox" Width="150" HorizontalAlignment="Left"/>
                 <TextBlock Text="Виконавець:"/>
-                <TextBox x:Name="PerformerTextBox" Width="370" HorizontalAlignment="Left"/>
+                <TextBox x:Name="PerformerTextBox" Width="300" HorizontalAlignment="Left"/>
             </StackPanel>
-
-            <StackPanel x:Name="MoviePanel" Visibility="Collapsed">
+            
+            <StackPanel x:Name="MoviePanel" Margin="0,10,0,0" Visibility="Collapsed">
                 <TextBlock Text="Жанр:"/>
-                <TextBox x:Name="GenreTextBox"/>
+                <TextBox x:Name="GenreTextBox" Width="200" HorizontalAlignment="Left"/>
                 <TextBlock Text="Тривалість (хв):"/>
-                <TextBox x:Name="DurationTextBox"/>
+                <TextBox x:Name="DurationTextBox" Width="100" HorizontalAlignment="Left"/>
             </StackPanel>
 
-            <Button Content="Додати квиток" Click="AddTicket_Click" Margin="0,10,0,0" Width="120" HorizontalAlignment="Left"/>
+            <Button Content="Додати квиток" Click="AddTicket_Click"
+                    Margin="0,15,0,0" Width="150" HorizontalAlignment="Left"/>
+        </StackPanel>
 
-            <TextBlock Text="Квитки сьогодні:" Margin="0,20,0,0"/>
+        <GroupBox Header="Заброньовані квитки" Grid.Row="1" Margin="0,20,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <ListBox x:Name="TicketsListBox" Margin="10" SelectionChanged="TicketsListBox_SelectionChanged"/>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,10,10">
+                    <Button Content="Переглянути деталі" Width="150" Margin="0,0,10,0" Click="ViewDetails_Click"/>
+                    <Button Content="Скасувати бронювання" Width="180" Click="CancelBooking_Click"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <TextBlock Text="Квитки сьогодні: " FontWeight="Bold"/>
             <TextBlock x:Name="TicketsTodayTextBlock" FontWeight="Bold"/>
-
         </StackPanel>
     </Grid>
 </Window>

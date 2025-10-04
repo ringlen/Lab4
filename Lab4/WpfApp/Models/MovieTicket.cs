@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab4.Models
+namespace WpfApp.Models
 {
     public class MovieTicket : Ticket
     {
@@ -25,5 +25,10 @@ namespace Lab4.Models
 
         public override string GetInfo() =>
             base.GetInfo() + $", Жанр: {Genre}, Тривалість: {DurationMinutes} хв";
+
+        public override string ToString()
+        {
+            return $"{EventName} ({Genre}) - {Date:d}";
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab4.Models
+namespace WpfApp.Models
 {
     public class Ticket
     {
@@ -42,6 +42,11 @@ namespace Lab4.Models
         public virtual string GetInfo()
         {
             return $"{EventName} - {Date:d} - {Venue}";
+        }
+
+        public override string ToString()
+        {
+            return $"{EventName} - {Date:d}";
         }
     }
 }

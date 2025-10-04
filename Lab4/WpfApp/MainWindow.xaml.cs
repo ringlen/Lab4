@@ -1,5 +1,4 @@
-﻿using Lab4.Models;
-using System.Text;
+﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -9,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp.Models;
 
 namespace WpfApp
 {
@@ -53,7 +53,7 @@ namespace WpfApp
 
             if (string.IsNullOrEmpty(eventName) || date == DateTime.MinValue || string.IsNullOrEmpty(venue))
             {
-                MessageBox.Show("Будь ласка, заповніть усі поля: назву події, дату та місце проведення.",
+                MessageBox.Show("Усі поля мають бути заповнені",
                                 "Помилка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
@@ -67,7 +67,7 @@ namespace WpfApp
 
                 if (string.IsNullOrEmpty(sector) || string.IsNullOrEmpty(performer))
                 {
-                    MessageBox.Show("Будь ласка, заповніть усі поля для квитка на концерт (сектор і виконавець).",
+                    MessageBox.Show("Усі поля мають бути заповнені",
                                     "Помилка", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
@@ -81,7 +81,7 @@ namespace WpfApp
 
                 if (string.IsNullOrEmpty(genre) || !validDuration || duration <= 0)
                 {
-                    MessageBox.Show("Будь ласка, заповніть усі поля для квитка в кіно (жанр і коректна тривалість).",
+                    MessageBox.Show("Усі поля мають бути заповнені (жанр і коректна тривалість).",
                                     "Помилка", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
@@ -92,15 +92,54 @@ namespace WpfApp
             ticket.Book();
             bookingSystem.AddTicket(ticket);
 
+            TicketsListBox.Items.Add(ticket);
+
             TicketsTodayTextBlock.Text = bookingSystem.GetTotalBookedToday(DateTime.Today).ToString();
 
-            EventNameTextBox.Clear();
-            VenueTextBox.Clear();
-            SectorTextBox.Clear();
-            PerformerTextBox.Clear();
-            GenreTextBox.Clear();
-            DurationTextBox.Clear();
-            EventDatePicker.SelectedDate = DateTime.Today;
+            ClearInputs();
+        }
+            private void ClearInputs()
+            {
+                EventNameTextBox.Clear();
+                VenueTextBox.Clear();
+                SectorTextBox.Clear();
+                PerformerTextBox.Clear();
+                GenreTextBox.Clear();
+                DurationTextBox.Clear();
+                EventDatePicker.SelectedDate = DateTime.Today;
+            }
+
+        private void ViewDetails_Click(object sender, RoutedEventArgs e)
+        {
+            if (TicketsListBox.SelectedItem is not Ticket selected)
+            {
+                MessageBox.Show("Оберіть квиток для перегляду.", "Інформація", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            string info = selected.GetInfo();
+            MessageBox.Show(info, "Деталі квитка", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void CancelBooking_Click(object sender, RoutedEventArgs e)
+        {
+            if (TicketsListBox.SelectedItem is not Ticket selected)
+            {
+                MessageBox.Show("Оберіть квиток для скасування.", "Інформація", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            selected.CancelBooking();
+            bookingSystem.RemoveTicket(selected);
+            TicketsListBox.Items.Remove(selected);
+            TicketsTodayTextBlock.Text = bookingSystem.GetTotalBookedToday(DateTime.Today).ToString();
+
+            MessageBox.Show("Бронювання скасовано.", "Успішно", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void TicketsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // використовується для ViewDetails_Click
         }
     }
-}
+ }
